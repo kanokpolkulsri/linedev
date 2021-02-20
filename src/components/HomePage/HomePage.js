@@ -71,7 +71,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className='app' style={{textAlign: 'left', marginTop: '16px'}}>
+      <div className='app'>
         <div className='initInputContainer'>
           User: <input type='text' id='name' name='name' onChange={this.updateName} className='userInput'></input>
           Chat server: <input type='text' id='server' name='server' value={this.state.server} onChange={this.updateServer} className='serverInput'></input>
