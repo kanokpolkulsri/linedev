@@ -51,18 +51,22 @@ class HomePage extends Component {
   }
 
   connectSource = () => {
-    const source = new EventSource(this.state.server + '/message');
+    const source = new EventSource(this.state.server + '/message'); // todo: create proper API cross-origin
     source.onmessage = function logEvents(event) {
+      // todo: set data to state.realTimeMessage
       console.log(JSON.parse(event.data))
       console.log(event.data);
     }
   }
 
   renderRealTimeData = () => {
-    return <div className='plam'>data: {this.state.data}</div>
+    // todo: render state.realTimeMessage from []
+    return <div className='plam'>data: {this.state.realTimeMessage[0]}</div>
   }
 
   render() {
+    let obj = JSON.parse({"user":"Admin","message":"test","time":"17 Feb 23:26:14"});
+      console.log(obj);
     return (
       <div className='app' style={{textAlign: 'left', marginTop: '16px'}}>
         <div className='initInputContainer'>
