@@ -53,24 +53,27 @@ class HomePage extends Component {
   connectSource = () => {
     const source = new EventSource(this.state.server + '/message'); // todo: create proper API cross-origin
     source.onmessage = function logEvents(event) {
-      // todo: set data to state.realTimeMessage
-      console.log(JSON.parse(event.data))
-      console.log(event.data);
+      let data = this.state.realTimeMessage;
+      data.push(JSON.stringify(event.data));
+      this.setState({ realTimeMessage: data });
     }
   }
 
   renderRealTimeData = () => {
-    // todo: render state.realTimeMessage from []
-    return <div className='plam'>data: {this.state.realTimeMessage[0]}</div>
+    return (
+      <div className='realTimeMessages'>
+        {this.state.realTimeMessage.map((msg) => {
+          return <div>{msg}</div>;
+        })}
+      </div>
+    )
   }
 
   render() {
-    let obj = JSON.parse({"user":"Admin","message":"test","time":"17 Feb 23:26:14"});
-      console.log(obj);
     return (
       <div className='app' style={{textAlign: 'left', marginTop: '16px'}}>
         <div className='initInputContainer'>
-          User: <input type='text' id='name' name='name' value='plam' onChange={this.updateName} className='userInput'></input>
+          User: <input type='text' id='name' name='name' onChange={this.updateName} className='userInput'></input>
           Chat server: <input type='text' id='server' name='server' value={this.state.server} onChange={this.updateServer} className='serverInput'></input>
           <button onClick={this.clickConnect}>connect</button>
         </div>
