@@ -11,15 +11,15 @@ class HomePage extends Component {
   }
 
   render() {
-
-    const source = new EventSource('https://chat-room-be.herokuapp.com');
-    source.onmessage = function logEvents(event) {      
-      this.setState({data: JSON.parse(event.data)});     
+    const source = new EventSource('https://chat-room-be.herokuapp.com/message');
+    source.onmessage = function logEvents(event) {
+      console.log(JSON.parse(event.data))
+      console.log(event.data);   
     }
 
     return (
       <div className="app">
-        <div>{this.state.data}{this.state.data}</div>
+        <div>{this.state.data}</div>
       </div>
     );
   }
