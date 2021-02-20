@@ -18,3 +18,31 @@
     height: 24px;
   }
 }
+
+.plam {
+  height: 80%;
+  width: 100%;
+  background-color: pink;
+}
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.userInput, .serverInput {
+  margin-right: 8px;
+}
+
+.messageInputContainer {
+  position: absolute;
+  bottom: 16px;
+}
+
+.messageInput {
+  width: 320px;
+  margin-right: 8px;
+}
