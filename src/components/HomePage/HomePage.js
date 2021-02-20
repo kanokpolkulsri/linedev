@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './HomePage.scss';
 
 class HomePage extends Component {
@@ -6,9 +7,9 @@ class HomePage extends Component {
     super(props);
     this.state = {
       appIconText: 'loading icon',
-      data: null,
-      name: "",
-      server: "",
+      realTimeMessage: [],
+      name: '',
+      server: 'https://chat-room-be.herokuapp.com',
       sumbit: false,
       message: null,
     };
@@ -28,29 +29,54 @@ class HomePage extends Component {
 
   clickConnect = (e) => {
     this.setState({sumbit: true});
+    if (this.state.server) {
+      this.connectSource();
+    }
   }
 
   clickSend = (e) => {
-    // todo:
+    this.postMessage();
   }
 
-  render() {
-    const source = new EventSource('https://chat-room-be.herokuapp.com/message');
+  postMessage = () => {
+    let body = {
+      user: this.state.name,
+      message: this.state.message
+    };
+    axios
+      .post(this.state.server + '/message', body)
+      .then((res) => {
+        console.log(res);
+      })
+  }
+
+  connectSource = () => {
+    const source = new EventSource(this.state.server + '/message');
     source.onmessage = function logEvents(event) {
       console.log(JSON.parse(event.data))
       console.log(event.data);
     }
+  }
 
+  renderRealTimeData = () => {
+    return <div className='plam'>data: {this.state.data}</div>
+  }
+
+  render() {
     return (
       <div className='app' style={{textAlign: 'left', marginTop: '16px'}}>
-        User: <input type='text' id='name' name='name' onChange={this.updateName} className='userInput'></input>
-        Chat server: <input type='text' id='server' name='server' onChange={this.updateServer} className='serverInput'></input>
-        <button onClick={this.clickConnect}>connect</button>
-        
-        <div className={`plam ${this.state.sumbit ? 'show' : 'hide'}`}>data: {this.state.data}</div>
-        <div className='messageInputContainer'>
-          Message: <input type='text' id='name' name='name' onChange={this.updateMessage} className='messageInput'></input>
-          <button disabled={!this.state.message} onClick={this.clickSend}>send</button>
+        <div className='initInputContainer'>
+          User: <input type='text' id='name' name='name' value='plam' onChange={this.updateName} className='userInput'></input>
+          Chat server: <input type='text' id='server' name='server' value={this.state.server} onChange={this.updateServer} className='serverInput'></input>
+          <button onClick={this.clickConnect}>connect</button>
+        </div>
+
+        <div className={this.state.sumbit ? 'show' : 'hide'}>
+          {this.renderRealTimeData()}
+          <div className='messageInputContainer'>
+            Message: <input type='text' id='name' name='name' onChange={this.updateMessage} className='messageInput'></input>
+            <button disabled={!this.state.message} onClick={this.clickSend}>send</button>
+          </div>
         </div>
       </div>
     );
