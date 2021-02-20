@@ -1,0 +1,40 @@
+.app {
+  text-align: left;
+  padding-top: 16px;
+}
+
+.realTimeMessages {
+  height: 80%;
+  width: 100%;
+}
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.initInputContainer {
+  border-bottom: 1px solid;
+  padding-bottom: 16px;
+}
+
+.userInput, .serverInput {
+  margin-right: 8px;
+}
+
+.messageInputContainer {
+  position: absolute;
+  bottom: 0px;
+  padding-bottom: 16px;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid;
+}
+
+.messageInput {
+  width: 70%;
+  margin-right: 8px;
+}
